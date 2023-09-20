@@ -1,6 +1,6 @@
 ﻿namespace BetterConsoleUI.Interfaces
 {
-    public class Class1
+    public interface IInput
     {
 
     }
