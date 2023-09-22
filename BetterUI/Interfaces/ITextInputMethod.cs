@@ -1,6 +1,6 @@
 ﻿namespace BetterConsoleUI.Interfaces
 {
-    public interface IInput
+    public interface ITextInputMethod : IInputMethod
     {
 
     }
