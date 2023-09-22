@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "BetterConsoleUI/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/BetterConsoleUI.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BetterConsoleUI.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "BetterConsoleUI/1.0.0": {
+      "type": "project",
+      "path": "../BetterUI/BetterConsoleUI.csproj",
+      "msbuildProject": "../BetterUI/BetterConsoleUI.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "BetterConsoleUI >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\whats\\.nuget\\packages\\": {},
@@ -39,7 +58,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Users\\flip\\source\\repos\\Input Simplification\\BetterConsoleUI\\BetterUI\\BetterConsoleUI.csproj": {
+              "projectPath": "D:\\Users\\flip\\source\\repos\\Input Simplification\\BetterConsoleUI\\BetterUI\\BetterConsoleUI.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

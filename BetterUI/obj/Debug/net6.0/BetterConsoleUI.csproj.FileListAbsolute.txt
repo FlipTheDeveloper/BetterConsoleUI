@@ -1,0 +1,12 @@
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\bin\Debug\net6.0\BetterConsoleUI.deps.json
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\bin\Debug\net6.0\BetterConsoleUI.dll
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\bin\Debug\net6.0\BetterConsoleUI.pdb
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\BetterConsoleUI.csproj.AssemblyReference.cache
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\BetterConsoleUI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\BetterConsoleUI.AssemblyInfoInputs.cache
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\BetterConsoleUI.AssemblyInfo.cs
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\BetterConsoleUI.csproj.CoreCompileInputs.cache
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\BetterConsoleUI.dll
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\refint\BetterConsoleUI.dll
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\BetterConsoleUI.pdb
+D:\Users\flip\source\repos\Input Simplification\BetterConsoleUI\BetterUI\obj\Debug\net6.0\ref\BetterConsoleUI.dll

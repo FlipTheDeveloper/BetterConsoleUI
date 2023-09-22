@@ -1,4 +1,5 @@
-﻿using BetterConsoleUI.Interfaces;
+﻿using BetterConsoleUI.Common.Display;
+using BetterConsoleUI.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,39 +10,38 @@ namespace BetterConsoleUI.Components.Input_Methods
 {
     public class RadioButton : ISelectionInputMethod
     {
-
         public IView ParentView { get; set; }
-
-
-        public string Selected = "[X]";
-
-        public string NotSelected = "[ ]";
 
         public List<Selection> Selections = new List<Selection>();
 
         public int CurrentSelection = 0;
 
-        public RadioButton(IView parentView)
+        public RadioButton(IView parentView, List<Selection> selections)
         {
             ParentView = parentView;
+            Selections = selections;
         }
 
-        public bool WrapAround { get; set; } = true;
-
+        /// <inheritdoc/>
         public bool HasControl { get; set; } = false;
 
+        /// <inheritdoc/>
         public override string ToString()
         {
+            string result = string.Empty;
 
+            int paddingX = (Console.WindowWidth - this.Selections.Select(s => s.Text.Length + ((RadioButtonDisplay.Selected.Length + RadioButtonDisplay.NotSelected.Length + 1) / 2)).Max()) / 2;
+            foreach (Selection s in Selections)
+            {
+                result += $"{(s.IsSelected ? RadioButtonDisplay.Selected : RadioButtonDisplay.NotSelected)} {s.Text}\n".PadLeft(paddingX).PadRight(paddingX);
+            }
+
+            return result;
         }
 
-        public async void Controll(bool hasControll = true)
+        public void Control()
         {
-            // Return Controll.
-            await Task.Yield();
-            HasControl = hasControll;
-
-            while (HasControl)
+            while (this.HasControl)
             {
                 ConsoleKeyInfo keyPress = Console.ReadKey();
 
@@ -51,19 +51,21 @@ namespace BetterConsoleUI.Components.Input_Methods
                     case ConsoleKey.UpArrow:
                         {
                             // Deselect the current selection.
-                            Selections.ToArray()[CurrentSelection].IsSelected = false;
+                            var oldSelection = Selections.ToArray()[CurrentSelection];
+                            oldSelection.IsSelected = false;
 
                             if (CurrentSelection != 0)
                             {
                                 CurrentSelection--;
                             }
-                            else if (WrapAround)
+                            else if (RadioButtonDisplay.WrapAround)
                             {
                                 CurrentSelection = Selections.Count() - 1;
                             }
 
                             // Select the current selection.
-                            Selections.ToArray()[CurrentSelection].IsSelected = true;
+                            var newSelection = Selections.ToArray()[CurrentSelection];
+                            newSelection.IsSelected = true;
 
                             this.ParentView.Update();
                             break;
@@ -73,19 +75,21 @@ namespace BetterConsoleUI.Components.Input_Methods
                     case ConsoleKey.DownArrow:
                         {
                             // Deselect the current selection.
-                            Selections.ToArray()[CurrentSelection].IsSelected = false;
+                            var oldSelection = Selections.ToArray()[CurrentSelection];
+                            oldSelection.IsSelected = false;
 
-                            if (CurrentSelection == Selections.Count() - 1)
+                            if (CurrentSelection != Selections.Count() - 1)
                             {
                                 CurrentSelection++;
                             }
-                            else if (WrapAround)
+                            else if (RadioButtonDisplay.WrapAround)
                             {
                                 CurrentSelection = 0;
                             }
 
                             // Select the current selection.
-                            Selections.ToArray()[CurrentSelection].IsSelected = true;
+                            var newSelection = Selections.ToArray()[CurrentSelection];
+                            newSelection.IsSelected = true;
 
                             this.ParentView.Update();
                             break;
@@ -114,6 +118,7 @@ namespace BetterConsoleUI.Components.Input_Methods
                         }
 
                 }
+                Common.Utils.Utilities.WaitForKeyUp();
             }
 
         }

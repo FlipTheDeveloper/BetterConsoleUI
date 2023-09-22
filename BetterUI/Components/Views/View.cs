@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BetterConsoleUI.Interfaces;
+using BetterConsoleUI.Common.Interfaces;
 
 namespace BetterConsoleUI.Components.Views
 {
@@ -39,13 +39,31 @@ namespace BetterConsoleUI.Components.Views
             if (Input != null)
             {
                 this.Input.HasControl = true;
+                this.Update();
+                this.Input.Control();
             }
+
         }
 
         /// <inheritdoc/>
         public void Update()
         {
+            // If something calls to update this view, but this view's input
+            // is not null and doesn't have control. It is probably a mistake.
 
+            if (this.Input == null || this.Input.HasControl != false)
+            {
+                Console.WriteLine(this.Header);
+
+                if (this.Input != null)
+                {
+                    Console.WriteLine(this.Input);
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Tried to update a view with an input that doesn't have control.");
+            }
         }
     }
 }

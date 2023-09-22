@@ -1,4 +1,4 @@
-﻿namespace BetterConsoleUI.Interfaces
+﻿namespace BetterConsoleUI.Common.Interfaces
 {
     public interface IView
     {
