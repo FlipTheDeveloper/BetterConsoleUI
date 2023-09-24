@@ -7,6 +7,9 @@ using BetterConsoleUI.Common.Interfaces;
 
 namespace BetterConsoleUI.Components.Views
 {
+    /// <summary>
+    ///     A generic view, 
+    /// </summary>
     public class View : IView
     {
         /// <inheritdoc/>
@@ -19,7 +22,7 @@ namespace BetterConsoleUI.Components.Views
         public IInputMethod? Input { get; set; }
 
         /// <inheritdoc/>
-        public void Display(IView? previousView, IView? sender = null)
+        public void Display(IView? previousView = null, IView? sender = null)
         {
             PreviousView = previousView;
 
@@ -53,7 +56,8 @@ namespace BetterConsoleUI.Components.Views
 
             if (this.Input == null || this.Input.HasControl != false)
             {
-                Console.WriteLine(this.Header);
+                Console.Clear();
+                Console.WriteLine(this.Header ?? string.Empty);
 
                 if (this.Input != null)
                 {

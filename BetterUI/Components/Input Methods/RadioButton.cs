@@ -16,10 +16,10 @@ namespace BetterConsoleUI.Components.Input_Methods
 
         public int CurrentSelection = 0;
 
-        public RadioButton(IView parentView, List<Selection> selections)
+        public RadioButton(IView parentView, List<Selection>? selections)
         {
             ParentView = parentView;
-            Selections = selections;
+            Selections = selections ?? new List<Selection>();
         }
 
         /// <inheritdoc/>
@@ -29,11 +29,17 @@ namespace BetterConsoleUI.Components.Input_Methods
         public override string ToString()
         {
             string result = string.Empty;
+            if (Selections.Where(s => s.IsSelected).Count() == 0)
+            {
+                var firstSelection = Selections[0];
+                firstSelection.IsSelected = true;
+                Selections[0] = firstSelection;
+            }
 
-            int paddingX = (Console.WindowWidth - this.Selections.Select(s => s.Text.Length + ((RadioButtonDisplay.Selected.Length + RadioButtonDisplay.NotSelected.Length + 1) / 2)).Max()) / 2;
+            //int paddingX = (Console.WindowWidth - this.Selections.Select(s => s.Text.Length + ((RadioButtonDisplay.Selected.Length + RadioButtonDisplay.NotSelected.Length + 1) / 2)).Max()) / 2;
             foreach (Selection s in Selections)
             {
-                result += $"{(s.IsSelected ? RadioButtonDisplay.Selected : RadioButtonDisplay.NotSelected)} {s.Text}\n".PadLeft(paddingX).PadRight(paddingX);
+                result +=  $"{(s.IsSelected ? RadioButtonDisplay.Selected : RadioButtonDisplay.NotSelected)} {s.Text}\n";
             }
 
             return result;
@@ -51,8 +57,9 @@ namespace BetterConsoleUI.Components.Input_Methods
                     case ConsoleKey.UpArrow:
                         {
                             // Deselect the current selection.
-                            var oldSelection = Selections.ToArray()[CurrentSelection];
+                            var oldSelection = Selections[CurrentSelection];
                             oldSelection.IsSelected = false;
+                            Selections[CurrentSelection] = oldSelection;
 
                             if (CurrentSelection != 0)
                             {
@@ -64,8 +71,9 @@ namespace BetterConsoleUI.Components.Input_Methods
                             }
 
                             // Select the current selection.
-                            var newSelection = Selections.ToArray()[CurrentSelection];
+                            var newSelection = Selections[CurrentSelection];
                             newSelection.IsSelected = true;
+                            Selections[CurrentSelection] = newSelection;
 
                             this.ParentView.Update();
                             break;
@@ -75,8 +83,9 @@ namespace BetterConsoleUI.Components.Input_Methods
                     case ConsoleKey.DownArrow:
                         {
                             // Deselect the current selection.
-                            var oldSelection = Selections.ToArray()[CurrentSelection];
+                            var oldSelection = Selections[CurrentSelection];
                             oldSelection.IsSelected = false;
+                            Selections[CurrentSelection] = oldSelection;
 
                             if (CurrentSelection != Selections.Count() - 1)
                             {
@@ -88,9 +97,11 @@ namespace BetterConsoleUI.Components.Input_Methods
                             }
 
                             // Select the current selection.
-                            var newSelection = Selections.ToArray()[CurrentSelection];
+                            var newSelection = Selections[CurrentSelection];
                             newSelection.IsSelected = true;
+                            Selections[CurrentSelection] = newSelection;
 
+                            
                             this.ParentView.Update();
                             break;
                         }
@@ -102,7 +113,7 @@ namespace BetterConsoleUI.Components.Input_Methods
                             {
                                 // If there is a previous view to display we do, and we set the sender as the PreviousView's PreviousView.
                                 // So we can go back two steps and so on.
-                                this.ParentView.Display(this.ParentView.PreviousView.PreviousView, this.ParentView);
+                                this.ParentView.PreviousView.Display(this.ParentView.PreviousView.PreviousView, this.ParentView);
                             }
 
                             break;
@@ -125,21 +136,11 @@ namespace BetterConsoleUI.Components.Input_Methods
 
     }
 
-    public enum UserInput
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        Enter,
-        Space,
-    }
-
     public struct Selection
     {
         public string Text;
-        public Func<bool?> MethodToInvoke;
-        public bool IsSelected;
+        public Action MethodToInvoke;
+        internal bool IsSelected;
     }
 
 

@@ -5,21 +5,29 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        RadioButtonView firstView = new RadioButtonView("Please select the view you want to see!");
+        RadioButtonView rbView = new RadioButtonView("A RadioButton View!");
 
-        View view = new View();
-        view.Header = "Some cool new Header!";
-        view.Input = new RadioButton(view, 
-            new List<Selection> 
-                { 
-                    new Selection() { IsSelected = true, Text = "Hello", MethodToInvoke = () => { return null; } },
-                    new Selection() { IsSelected = true, Text = "How", MethodToInvoke = () => { return null; } },
-                    new Selection() { IsSelected = true, Text = "Are", MethodToInvoke = () => { return null; } },
-                    new Selection() { IsSelected = true, Text = "You", MethodToInvoke = () => { return null; } },
-                }
-            );
+        var firstViewSelections =
+            new List<Selection>
+                {
+                    new Selection() { Text = "Next RadioButtonView", MethodToInvoke = () => { rbView.Display(firstView); } },
+                    new Selection() { Text = "Hello", MethodToInvoke = () => { Console.WriteLine("You chose : 'Hello'"); } },
+                    new Selection() { Text = "How", MethodToInvoke = () => { Console.WriteLine("You chose : 'How'"); } },
+                    new Selection() { Text = "Are", MethodToInvoke = () => { Console.WriteLine("You chose : 'Are'"); } },
+                    new Selection() { Text = "You", MethodToInvoke = () => { Console.WriteLine("You chose : 'You'"); } },
+                };
 
-        view.Display(null);
+        var rbViewSelections =
+            new List<Selection>
+            {
+                new Selection() {Text = "You made it!", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }}
+            };
+        
+        firstView = new RadioButtonView(firstView.Header, firstViewSelections);
+        rbView = new RadioButtonView(rbView.Header, rbViewSelections, firstView);
+        
+        firstView.Display();
 
     }
 }
