@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BetterConsoleUI.Common.Display
+﻿namespace BetterConsoleUI.Common.Settings
 {
     /// <summary>
     ///     Class containing settings for displaying and interacting with the RadioButton input method.
     /// </summary>
-    public static class RadioButtonDisplay
+    public static class RadioButtonSettings
     {
         /// <summary>
         ///     The icon displayed when a selection is selected.

@@ -1,4 +1,6 @@
-﻿namespace BetterConsoleUI.Common.Interfaces
+﻿using BetterConsoleUI.Components.Views;
+
+namespace BetterConsoleUI.Common.Interfaces
 {
     public interface IView
     {
@@ -21,6 +23,14 @@
         ///     The method used to switch to this view.
         /// </summary>
         public abstract void Display(IView? previousView, IView? sendingView = null);
+
+        /// <summary>
+        ///     Switches the view to the <paramref name="view"/> specified, 
+        ///     and removes the controlls from the previous view. Additionally 
+        ///     sets the view's <see cref="IView.PreviousView""/> to be this view.
+        /// </summary>
+        /// <param name="view">The view to switch to.</param>
+        public void SwitchTo(View view);
 
         /// <summary>
         ///     Method used to update the view.

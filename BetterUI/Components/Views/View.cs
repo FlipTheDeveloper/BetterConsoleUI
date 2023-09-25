@@ -49,6 +49,13 @@ namespace BetterConsoleUI.Components.Views
         }
 
         /// <inheritdoc/>
+        public void SwitchTo(View view)
+        {
+            view.Display(this);
+            view.PreviousView = this;
+        }
+
+        /// <inheritdoc/>
         public void Update()
         {
             // If something calls to update this view, but this view's input

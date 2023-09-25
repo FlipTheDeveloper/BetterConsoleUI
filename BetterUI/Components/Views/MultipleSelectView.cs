@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleUI.Components.Views
 {
-    public class RadioButtonView : View
+    public class MultipleSelectView : View
     {
-        public RadioButtonView(string? header, List<RadioButtonSelection>? selections = null, IView? previousView = null)
+        public MultipleSelectView(string? header, List<MultipleSelectSelection>? selections = null, IView? previousView = null)
         {
             this.Header = header;
-            this.Input = new RadioButton(this, selections);
+            this.Input = new MultipleSelect(this, selections);
             this.PreviousView = previousView;
         }
     }
