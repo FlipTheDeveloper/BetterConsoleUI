@@ -11,5 +11,10 @@
         ///     A method to provide control to the input method.
         /// </summary>
         public void Control();
+
+        /// <summary>
+        ///     Writes the selection method to the console.
+        /// </summary>
+        public void Print();
     }
 }

@@ -36,5 +36,10 @@ namespace BetterConsoleUI.Common.Interfaces
         ///     Method used to update the view.
         /// </summary>
         public abstract void Update();
+
+        /// <summary>
+        ///     Method used to revoke control from this view's <see cref="Input"/>
+        /// </summary>
+        public void RevokeControl();
     }
 }

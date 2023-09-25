@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using BetterConsoleUI.Common.Interfaces;
@@ -27,21 +28,22 @@ namespace BetterConsoleUI.Components.Views
             PreviousView = previousView;
 
             // Make the previous view lose control.
-            if (PreviousView != null && PreviousView.Input != null)
+            if (PreviousView != null)
             {
-                PreviousView.Input.HasControl = false;
+                PreviousView.RevokeControl();
             }
 
             // If this view is the previous view, and we returned to it. Make the latter view lose control.
-            if (sender != null && sender.Input != null)
+            if (sender != null)
             {
-                sender.Input.HasControl = false;
+                sender.RevokeControl();
             }
 
             // Give control to this input.
             if (Input != null)
             {
                 this.Input.HasControl = true;
+                Console.Clear();
                 this.Update();
                 this.Input.Control();
             }
@@ -63,17 +65,25 @@ namespace BetterConsoleUI.Components.Views
 
             if (this.Input == null || this.Input.HasControl != false)
             {
-                Console.Clear();
+                Console.SetCursorPosition(0, 0);
                 Console.WriteLine(this.Header ?? string.Empty);
 
                 if (this.Input != null)
                 {
-                    Console.WriteLine(this.Input);
+                    this.Input.Print();
                 }
             }
             else
             {
                 throw new InvalidOperationException("Tried to update a view with an input that doesn't have control.");
+            }
+        }
+
+        public void RevokeControl()
+        {
+            if (this.Input != null)
+            {
+                this.Input.HasControl = false;
             }
         }
     }

@@ -9,6 +9,7 @@ internal class Program
         RadioButtonView firstView = new RadioButtonView("Please select the view you want to see!");
         RadioButtonView rbView = new RadioButtonView("A RadioButton View!");
         MultipleSelectView msView = new MultipleSelectView("A Multiple Select View.");
+        TextInputView tiView = new TextInputView("Foo or Bar?");
 
         // Define Selections
         var firstViewSelections =
@@ -16,7 +17,7 @@ internal class Program
                 {
                     new RadioButtonSelection() { Text = "RadioButtonView", MethodToInvoke = () => { firstView.SwitchTo(rbView); } },
                     new RadioButtonSelection() { Text = "MultipleSelectView", MethodToInvoke = () => { firstView.SwitchTo(msView); } },
-                    new RadioButtonSelection() { Text = "How", MethodToInvoke = () => { Console.WriteLine("You chose : 'How'"); } },
+                    new RadioButtonSelection() { Text = "TextInputView", MethodToInvoke = () => { firstView.SwitchTo(tiView); } },
                     new RadioButtonSelection() { Text = "Are", MethodToInvoke = () => { Console.WriteLine("You chose : 'Are'"); } },
                     new RadioButtonSelection() { Text = "You", MethodToInvoke = () => { Console.WriteLine("You chose : 'You'"); } },
                 };
@@ -37,10 +38,19 @@ internal class Program
                 new MultipleSelectSelection() {Text = "Fifth Selection", MethodToInvoke = () => { Console.WriteLine("5"); } },
             };
 
+        var tiViewSelections =
+            new List<TextInputSelection>
+            {
+                new TextInputSelection() {Text = "Foo", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Foo is good");}},
+                new TextInputSelection() {Text = "Bar", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Bar is better");}},
+                new TextInputSelection() {Text = "Baz", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Baz is best");}},
+            };
+
         // Assign selections to views.
         firstView = new RadioButtonView(firstView.Header, firstViewSelections);
         rbView = new RadioButtonView(rbView.Header, rbViewSelections);
         msView = new MultipleSelectView(msView.Header, msViewSelections);
+        tiView = new TextInputView(tiView.Header, tiViewSelections);
 
         firstView.Display();
 

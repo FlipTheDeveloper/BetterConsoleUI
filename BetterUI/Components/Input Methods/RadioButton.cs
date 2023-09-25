@@ -26,7 +26,7 @@ namespace BetterConsoleUI.Components.Input_Methods
         public bool HasControl { get; set; } = false;
 
         /// <inheritdoc/>
-        public override string ToString()
+        public void Print()
         {
             string result = string.Empty;
             if (Selections.Where(s => s.IsSelected).Count() == 0)
@@ -42,7 +42,7 @@ namespace BetterConsoleUI.Components.Input_Methods
                 result +=  $"{(s.IsSelected ? RadioButtonSettings.Selected : RadioButtonSettings.NotSelected)} {s.Text}\n";
             }
 
-            return result;
+            Console.WriteLine(result);
         }
 
         public void Control()

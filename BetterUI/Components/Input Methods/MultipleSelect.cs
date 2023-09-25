@@ -26,23 +26,28 @@ namespace BetterConsoleUI.Components.Input_Methods
         public bool HasControl { get; set; } = false;
 
         /// <inheritdoc/>
-        public override string ToString()
+        public void Print()
         {
-            string result = string.Empty;
-            if (Selections.Where(s => s.IsSelected).Count() == 0)
+            if (Selections.Where(s => s.IsHighlighted).Count() == 0)
             {
                 var firstSelection = Selections[0];
-                firstSelection.IsSelected = true;
+                firstSelection.IsHighlighted = true;
                 Selections[0] = firstSelection;
             }
 
             //int paddingX = (Console.WindowWidth - this.Selections.Select(s => s.Text.Length + ((RadioButtonDisplay.Selected.Length + RadioButtonDisplay.NotSelected.Length + 1) / 2)).Max()) / 2;
             foreach (MultipleSelectSelection s in Selections)
             {
-                result +=  $"{(s.IsSelected ? RadioButtonSettings.Selected : RadioButtonSettings.NotSelected)} {s.Text}\n";
+                string result = string.Empty;
+                result +=  $"{(s.IsSelected ? MultipleSelectSettings.Selected : MultipleSelectSettings.NotSelected)} {s.Text}";
+                if (s.IsHighlighted)
+                {
+                    Console.BackgroundColor = MultipleSelectSettings.HighlightColors.BackgroundColor;
+                    Console.ForegroundColor = MultipleSelectSettings.HighlightColors.ForegroundColor;
+                }
+                Console.WriteLine(result);
+                Console.ResetColor();
             }
-
-            return result;
         }
 
         public void Control()
@@ -126,12 +131,13 @@ namespace BetterConsoleUI.Components.Input_Methods
                             var selection = Selections[CurrentSelection];
                             selection.IsSelected = !selection.IsSelected;
                             Selections[CurrentSelection] = selection;
+                            this.ParentView.Update();
                             break;
                         }
 
                     case ConsoleKey.Enter:
                         {
-                            Selections.ForEach(s => s.MethodToInvoke.Invoke());
+                            Selections.Where(s => s.IsSelected).ToList().ForEach(s => s.MethodToInvoke.Invoke());
                             break;
                         }
 
