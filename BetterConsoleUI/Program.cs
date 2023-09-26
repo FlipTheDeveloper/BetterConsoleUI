@@ -1,5 +1,6 @@
 ﻿using BetterConsoleUI.Components.Input_Methods;
 using BetterConsoleUI.Components.Views;
+using System.Runtime.CompilerServices;
 
 internal class Program
 {
@@ -17,9 +18,8 @@ internal class Program
                 {
                     new RadioButtonSelection() { Text = "RadioButtonView", MethodToInvoke = () => { firstView.SwitchTo(rbView); } },
                     new RadioButtonSelection() { Text = "MultipleSelectView", MethodToInvoke = () => { firstView.SwitchTo(msView); } },
-                    new RadioButtonSelection() { Text = "TextInputView", MethodToInvoke = () => { firstView.SwitchTo(tiView); } },
-                    new RadioButtonSelection() { Text = "Are", MethodToInvoke = () => { Console.WriteLine("You chose : 'Are'"); } },
-                    new RadioButtonSelection() { Text = "You", MethodToInvoke = () => { Console.WriteLine("You chose : 'You'"); } },
+                    new RadioButtonSelection() { Text = "TextInputSelection", MethodToInvoke = () => { firstView.SwitchTo(tiView); } },
+                    new RadioButtonSelection() { Text = "Exit", MethodToInvoke = () => { firstView.RevokeControl();  } },
                 };
 
         var rbViewSelections =

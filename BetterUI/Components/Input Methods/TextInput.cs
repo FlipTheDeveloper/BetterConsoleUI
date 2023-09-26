@@ -14,12 +14,16 @@ namespace BetterConsoleUI.Components.Input_Methods
 
         public List<TextInputSelection> Selections = new List<TextInputSelection>();
 
-        public bool NeedsHelp = false;
-
         public TextInput(IView parentView, List<TextInputSelection>? selections)
         {
             ParentView = parentView;
             Selections = selections ?? new List<TextInputSelection>();
+
+            if (TextInputSettings.ReservedKeywords)
+            {
+                Selections.Add(new TextInputSelection() { Text = "help", MethodToInvoke = this.Help });
+                Selections.Add(new TextInputSelection() { Text = "back", MethodToInvoke = this.Back });
+            }
         }
 
         /// <inheritdoc/>
@@ -28,26 +32,12 @@ namespace BetterConsoleUI.Components.Input_Methods
         /// <inheritdoc/>
         public void Print()
         {
-            if (this.NeedsHelp)
-            {
-                Console.WriteLine("Available Options:");
-
-                // TODO: Make a new list and append the existing one to it. Add methods to invoke instead of handling them manually. Maybe make use of the Common.Utils namespace.
-                if (TextInputSettings.ReservedKeywords)
-                {
-                    Console.WriteLine("help");
-                    Console.WriteLine("back");
-                }
-                
-                foreach (var s in Selections)
-                {
-                    Console.WriteLine($"  {s.Text}");
-                }
-            }
         }
 
         public void Control()
         {
+
+
             while (this.HasControl)
             {
                 var response = Console.ReadLine();
@@ -61,8 +51,8 @@ namespace BetterConsoleUI.Components.Input_Methods
 
                 if (TextInputSettings.CaseInsensitive == true)
                 {
-                    response = response!.ToUpper();
-                    selections.ForEach(s => s.Text.ToUpper());
+                    response = response!.ToLower();
+                    selections = selections.Select(s => new TextInputSelection() { Text = s.Text.ToLower(), MethodToInvoke = s.MethodToInvoke }).ToList();
                 }
 
                 if (TextInputSettings.AllowFuzzySelectionMatching)
@@ -79,23 +69,12 @@ namespace BetterConsoleUI.Components.Input_Methods
                     }
                 }
 
-                if (matches.Count == 0 || response.ToLower() == "help")
+                if (matches.Count == 0)
                 {
-                    this.NeedsHelp = true;
                     this.ParentView.Update();
+                    this.Help();
                     continue;
                 }
-
-                if (response.ToLower() == "back")
-                {
-                    if (this.ParentView.PreviousView == null)
-                    {
-                        continue;
-                    }
-
-                    this.ParentView.PreviousView.Display(this.ParentView.PreviousView.PreviousView, this.ParentView);
-                }
-
 
                 if (TextInputSettings.AllowMultipleMatches)
                 {
@@ -109,7 +88,28 @@ namespace BetterConsoleUI.Components.Input_Methods
 
         }
 
+        public void Help()
+        {
+            this.ParentView.Update();
+            Console.WriteLine("Available Options:");
+
+            foreach (var s in Selections)
+            {
+                Console.WriteLine($"  {s.Text}");
+            }
+        }
+
+        public void Back()
+        {
+            if (this.ParentView.PreviousView != null)
+            {
+                this.ParentView.PreviousView.Display(this.ParentView.PreviousView.PreviousView, this.ParentView);
+            }
+        }
+
     }
+
+
 
     public struct TextInputSelection
     {
