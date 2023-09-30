@@ -12,18 +12,31 @@ namespace BetterConsoleUI.Components.Input_Methods
     {
         public IView ParentView { get; set; }
 
-        public List<TextInputSelection> Selections = new List<TextInputSelection>();
+        private List<TextInputSelection> selections = new List<TextInputSelection>();
+
+        public List<TextInputSelection> Selections
+        {
+            get 
+            { 
+                return selections; 
+            }
+            
+            set 
+            { 
+                selections = value;
+
+                if (TextInputSettings.ReservedKeywords)
+                {
+                    Selections.Add(new TextInputSelection() { Text = "help", MethodToInvoke = this.Help });
+                    Selections.Add(new TextInputSelection() { Text = "back", MethodToInvoke = this.Back });
+                }
+            }
+        }
 
         public TextInput(IView parentView, List<TextInputSelection>? selections)
         {
             ParentView = parentView;
             Selections = selections ?? new List<TextInputSelection>();
-
-            if (TextInputSettings.ReservedKeywords)
-            {
-                Selections.Add(new TextInputSelection() { Text = "help", MethodToInvoke = this.Help });
-                Selections.Add(new TextInputSelection() { Text = "back", MethodToInvoke = this.Back });
-            }
         }
 
         /// <inheritdoc/>

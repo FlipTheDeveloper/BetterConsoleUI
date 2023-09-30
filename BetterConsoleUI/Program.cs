@@ -1,5 +1,6 @@
 ﻿using BetterConsoleUI.Components.Input_Methods;
 using BetterConsoleUI.Components.Views;
+using BetterConsoleUIDemo;
 using System.Runtime.CompilerServices;
 
 internal class Program
@@ -11,6 +12,7 @@ internal class Program
         RadioButtonView rbView = new RadioButtonView("A RadioButton View!");
         MultipleSelectView msView = new MultipleSelectView("A Multiple Select View.");
         TextInputView tiView = new TextInputView("Foo or Bar?");
+        NumberSelectView nsView = new NumberSelectView("Whats your favorite number?");
 
         // Define Selections
         var firstViewSelections =
@@ -19,6 +21,7 @@ internal class Program
                     new RadioButtonSelection() { Text = "RadioButtonView", MethodToInvoke = () => { firstView.SwitchTo(rbView); } },
                     new RadioButtonSelection() { Text = "MultipleSelectView", MethodToInvoke = () => { firstView.SwitchTo(msView); } },
                     new RadioButtonSelection() { Text = "TextInputSelection", MethodToInvoke = () => { firstView.SwitchTo(tiView); } },
+                    new RadioButtonSelection() { Text = "NumberSelection", MethodToInvoke = () => { firstView.SwitchTo(nsView); } },
                     new RadioButtonSelection() { Text = "Exit", MethodToInvoke = () => { firstView.RevokeControl();  } },
                 };
 
@@ -47,10 +50,11 @@ internal class Program
             };
 
         // Assign selections to views.
-        firstView = new RadioButtonView(firstView.Header, firstViewSelections);
-        rbView = new RadioButtonView(rbView.Header, rbViewSelections);
-        msView = new MultipleSelectView(msView.Header, msViewSelections);
-        tiView = new TextInputView(tiView.Header, tiViewSelections);
+        firstView.Selections = firstViewSelections;
+        rbView.Selections = rbViewSelections;
+        msView.Selections = msViewSelections;
+        tiView.Selections = tiViewSelections;
+        nsView.MethodToInvoke = (int x) => { Controllers.GuessNumber(x, nsView); };
 
         firstView.Display();
 

@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace BetterConsoleUI.Components.Views
 {
-    public class MultipleSelectView : View
+    public class NumberSelectView : View
     {
-        public List<MultipleSelectSelection>? Selections
+        public Action<int>? MethodToInvoke
         {
             get
             {
-                var input = this.Input as MultipleSelect;
+                var input = this.Input as NumberSelect;
 
                 if (input != null)
                 {
-                    return input.Selections;
+                    return input.MethodToInvoke;
                 }
 
                 return null;
@@ -26,19 +26,20 @@ namespace BetterConsoleUI.Components.Views
 
             set
             {
-                var input = this.Input as MultipleSelect;
+                var input = this.Input as NumberSelect;
 
                 if (input != null && value != null)
                 {
-                    input.Selections = value;
+                    input.MethodToInvoke = value;
                 }
             }
         }
 
-        public MultipleSelectView(string? header, List<MultipleSelectSelection>? selections = null, IView? previousView = null)
+        public NumberSelectView(string? header, Action<int>? methodToInvoke = null, int minNumber = 0, int maxNumber = 100, IView? previousView = null)
         {
             this.Header = header;
-            this.Input = new MultipleSelect(this, selections);
+            this.MethodToInvoke = methodToInvoke ?? ((int _) => { this.Update(); });
+            this.Input = new NumberSelect(this, methodToInvoke, minNumber, maxNumber);
             this.PreviousView = previousView;
         }
     }

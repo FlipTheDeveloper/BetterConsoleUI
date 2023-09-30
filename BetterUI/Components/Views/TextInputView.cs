@@ -3,6 +3,7 @@ using BetterConsoleUI.Components.Input_Methods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,31 @@ namespace BetterConsoleUI.Components.Views
 {
     public class TextInputView : View
     {
+        public List<TextInputSelection>? Selections 
+        {
+            get
+            {
+                var input = this.Input as TextInput;
+
+                if (input != null)
+                {
+                    return input.Selections;
+                }
+
+                return null;
+            }
+
+            set
+            {
+                var input = this.Input as TextInput;
+
+                if (input != null && value != null)
+                {
+                    input.Selections = value;
+                }
+            }
+        }
+
         public TextInputView(string? header, List<TextInputSelection>? selections = null, IView? previousView = null)
         {
             this.Header = header;
@@ -18,7 +44,7 @@ namespace BetterConsoleUI.Components.Views
         }
 
         /// <inheritdoc/>
-        public new void Update()
+        public override void Update()
         {
             // If something calls to update this view, but this view's input
             // is not null and doesn't have control. It is probably a mistake.

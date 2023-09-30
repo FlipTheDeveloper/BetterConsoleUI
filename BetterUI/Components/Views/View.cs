@@ -58,7 +58,7 @@ namespace BetterConsoleUI.Components.Views
         }
 
         /// <inheritdoc/>
-        public void Update()
+        public virtual void Update()
         {
             // If something calls to update this view, but this view's input
             // is not null and doesn't have control. It is probably a mistake.
