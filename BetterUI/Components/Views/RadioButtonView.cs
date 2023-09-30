@@ -1,10 +1,5 @@
 ﻿using BetterConsoleUI.Common.Interfaces;
 using BetterConsoleUI.Components.Input_Methods;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BetterConsoleUI.Components.Views
 {

@@ -1,10 +1,4 @@
-﻿using BetterConsoleUI.Common.Settings;
-using BetterConsoleUI.Common.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BetterConsoleUI.Common.Interfaces;
 
 namespace BetterConsoleUI.Components.Input_Methods
 {

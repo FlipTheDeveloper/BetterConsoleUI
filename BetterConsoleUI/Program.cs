@@ -1,7 +1,6 @@
 ﻿using BetterConsoleUI.Components.Input_Methods;
 using BetterConsoleUI.Components.Views;
 using BetterConsoleUIDemo;
-using System.Runtime.CompilerServices;
 
 internal class Program
 {
