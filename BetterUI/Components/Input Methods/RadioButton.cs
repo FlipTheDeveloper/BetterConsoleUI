@@ -3,7 +3,7 @@ using BetterConsoleUI.Common.Settings;
 
 namespace BetterConsoleUI.Components.Input_Methods
 {
-    public class RadioButton : ISelectionInputMethod
+    public class RadioButton : IInputMethod
     {
         public IView ParentView { get; set; }
 

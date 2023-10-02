@@ -3,7 +3,7 @@
 namespace BetterConsoleUI.Components.Views
 {
     /// <summary>
-    ///     A generic view, 
+    ///     A generic view.
     /// </summary>
     public class View : IView
     {
@@ -73,6 +73,7 @@ namespace BetterConsoleUI.Components.Views
             }
         }
 
+        /// <inheritdoc/>
         public void RevokeControl()
         {
             if (this.Input != null)

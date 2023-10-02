@@ -2,7 +2,7 @@
 
 namespace BetterConsoleUI.Components.Input_Methods
 {
-    public class NumberSelect: ISelectionInputMethod
+    public class NumberSelect: IInputMethod
     {
         public IView ParentView { get; set; }
 

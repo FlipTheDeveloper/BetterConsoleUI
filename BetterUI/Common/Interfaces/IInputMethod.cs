@@ -3,6 +3,11 @@
     public interface IInputMethod
     {
         /// <summary>
+        ///     The view containing the input method.
+        /// </summary>
+        public IView ParentView { get; set; }
+
+        /// <summary>
         ///     A bool indicating whether or not the InputMethod has controll.
         /// </summary>
         public bool HasControl { get; set; }

@@ -3,13 +3,13 @@ using BetterConsoleUI.Common.Settings;
 
 namespace BetterConsoleUI.Components.Input_Methods
 {
-    public class TextInput : ISelectionInputMethod
+    public class TextSelect : IInputMethod
     {
         public IView ParentView { get; set; }
 
-        private List<TextInputSelection> selections = new List<TextInputSelection>();
+        private List<TextSelectSelection> selections = new List<TextSelectSelection>();
 
-        public List<TextInputSelection> Selections
+        public List<TextSelectSelection> Selections
         {
             get 
             { 
@@ -20,18 +20,18 @@ namespace BetterConsoleUI.Components.Input_Methods
             { 
                 selections = value;
 
-                if (TextInputSettings.ReservedKeywords)
+                if (TextSelectSettings.ReservedKeywords)
                 {
-                    Selections.Add(new TextInputSelection() { Text = "help", MethodToInvoke = this.Help });
-                    Selections.Add(new TextInputSelection() { Text = "back", MethodToInvoke = this.Back });
+                    Selections.Add(new TextSelectSelection() { Text = "help", MethodToInvoke = this.Help });
+                    Selections.Add(new TextSelectSelection() { Text = "back", MethodToInvoke = this.Back });
                 }
             }
         }
 
-        public TextInput(IView parentView, List<TextInputSelection>? selections)
+        public TextSelect(IView parentView, List<TextSelectSelection>? selections)
         {
             ParentView = parentView;
-            Selections = selections ?? new List<TextInputSelection>();
+            Selections = selections ?? new List<TextSelectSelection>();
         }
 
         /// <inheritdoc/>
@@ -40,6 +40,15 @@ namespace BetterConsoleUI.Components.Input_Methods
         /// <inheritdoc/>
         public void Print()
         {
+            if (TextSelectSettings.ShowAvailableOptions) 
+            {
+                Console.WriteLine("Available Options:");
+
+                foreach (var s in Selections)
+                {
+                    Console.WriteLine($"  {s.Text}");
+                }
+            }
         }
 
         public void Control()
@@ -50,20 +59,20 @@ namespace BetterConsoleUI.Components.Input_Methods
             {
                 var response = Console.ReadLine();
                 var selections = Selections.ToList();
-                var matches = new List<TextInputSelection>();
+                var matches = new List<TextSelectSelection>();
 
                 if (response == null || response == string.Empty)
                 {
                     continue;
                 }
 
-                if (TextInputSettings.CaseInsensitive == true)
+                if (TextSelectSettings.CaseInsensitive == true)
                 {
                     response = response!.ToLower();
-                    selections = selections.Select(s => new TextInputSelection() { Text = s.Text.ToLower(), MethodToInvoke = s.MethodToInvoke }).ToList();
+                    selections = selections.Select(s => new TextSelectSelection() { Text = s.Text.ToLower(), MethodToInvoke = s.MethodToInvoke }).ToList();
                 }
 
-                if (TextInputSettings.AllowFuzzySelectionMatching)
+                if (TextSelectSettings.AllowFuzzySelectionMatching)
                 {
                     foreach (var s in selections)
                     {
@@ -84,7 +93,7 @@ namespace BetterConsoleUI.Components.Input_Methods
                     continue;
                 }
 
-                if (TextInputSettings.AllowMultipleMatches)
+                if (TextSelectSettings.AllowMultipleMatches)
                 {
                     matches.ForEach(m => m.MethodToInvoke.Invoke());
                 }
@@ -99,11 +108,15 @@ namespace BetterConsoleUI.Components.Input_Methods
         public void Help()
         {
             this.ParentView.Update();
-            Console.WriteLine("Available Options:");
 
-            foreach (var s in Selections)
+            if (!TextSelectSettings.ShowAvailableOptions)
             {
-                Console.WriteLine($"  {s.Text}");
+                Console.WriteLine("Available Options:");
+
+                foreach (var s in Selections)
+                {
+                    Console.WriteLine($"  {s.Text}");
+                }
             }
         }
 
@@ -119,7 +132,7 @@ namespace BetterConsoleUI.Components.Input_Methods
 
 
 
-    public struct TextInputSelection
+    public struct TextSelectSelection
     {
         public string Text;
         public Action MethodToInvoke;

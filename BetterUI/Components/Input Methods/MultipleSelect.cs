@@ -3,8 +3,9 @@ using BetterConsoleUI.Common.Settings;
 
 namespace BetterConsoleUI.Components.Input_Methods
 {
-    public class MultipleSelect: ISelectionInputMethod
+    public class MultipleSelect : IInputMethod
     {
+
         public IView ParentView { get; set; }
 
         public List<MultipleSelectSelection> Selections = new List<MultipleSelectSelection>();

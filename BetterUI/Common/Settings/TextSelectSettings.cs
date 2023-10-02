@@ -3,7 +3,7 @@
     /// <summary>
     ///     Class containing settings for displaying and interacting with the TextInput input method.
     /// </summary>
-    public static class TextInputSettings
+    public static class TextSelectSettings
     {
         /// <summary>
         ///     Searches for selections that contain all of the charicters provided. For instance 'YP' would match 'Yes Please!'.
@@ -24,5 +24,10 @@
         ///     Enables reserved key words and their functionality. This enables keywords like 'help' and 'back'.
         /// </summary>
         public static bool ReservedKeywords = true;
+
+        /// <summary>
+        ///     Forces the view to display all available options under the header.
+        /// </summary>
+        public static bool ShowAvailableOptions = true;
     }
 }

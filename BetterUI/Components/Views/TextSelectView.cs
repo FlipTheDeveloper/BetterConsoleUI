@@ -3,13 +3,19 @@ using BetterConsoleUI.Components.Input_Methods;
 
 namespace BetterConsoleUI.Components.Views
 {
-    public class TextInputView : View
+    /// <summary>
+    ///     A View using the <see cref="TextSelect"/> component.
+    /// </summary>
+    public class TextSelectView : View
     {
-        public List<TextInputSelection>? Selections 
+        /// <summary>
+        ///     A <see cref="List{TextSelectSelection}"/> describing possible selections and their attached <see cref="Action"/>.
+        /// </summary>
+        public List<TextSelectSelection>? Selections 
         {
             get
             {
-                var input = this.Input as TextInput;
+                var input = this.Input as TextSelect;
 
                 if (input != null)
                 {
@@ -21,7 +27,7 @@ namespace BetterConsoleUI.Components.Views
 
             set
             {
-                var input = this.Input as TextInput;
+                var input = this.Input as TextSelect;
 
                 if (input != null && value != null)
                 {
@@ -30,10 +36,11 @@ namespace BetterConsoleUI.Components.Views
             }
         }
 
-        public TextInputView(string? header, List<TextInputSelection>? selections = null, IView? previousView = null)
+        
+        public TextSelectView(string? header, List<TextSelectSelection>? selections = null, IView? previousView = null)
         {
             this.Header = header;
-            this.Input = new TextInput(this, selections);
+            this.Input = new TextSelect(this, selections);
             this.PreviousView = previousView;
         }
 

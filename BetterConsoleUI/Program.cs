@@ -10,7 +10,7 @@ internal class Program
         RadioButtonView firstView = new RadioButtonView("Please select the view you want to see!");
         RadioButtonView rbView = new RadioButtonView("A RadioButton View!");
         MultipleSelectView msView = new MultipleSelectView("A Multiple Select View.");
-        TextInputView tiView = new TextInputView("Foo or Bar?");
+        TextSelectView tiView = new TextSelectView("Foo or Bar?");
         NumberSelectView nsView = new NumberSelectView("Whats your favorite number?");
 
         // Define Selections
@@ -41,11 +41,11 @@ internal class Program
             };
 
         var tiViewSelections =
-            new List<TextInputSelection>
+            new List<TextSelectSelection>
             {
-                new TextInputSelection() {Text = "Foo", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Foo is good");}},
-                new TextInputSelection() {Text = "Bar", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Bar is better");}},
-                new TextInputSelection() {Text = "Baz", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Baz is best");}},
+                new TextSelectSelection() {Text = "Foo", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Foo is good");}},
+                new TextSelectSelection() {Text = "Bar", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Bar is better");}},
+                new TextSelectSelection() {Text = "Baz", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Baz is best");}},
             };
 
         // Assign selections to views.
@@ -56,6 +56,5 @@ internal class Program
         nsView.MethodToInvoke = (int x) => { Controllers.GuessNumber(x, nsView); };
 
         firstView.Display();
-
     }
 }
