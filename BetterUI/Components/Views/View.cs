@@ -44,6 +44,14 @@ namespace BetterConsoleUI.Components.Views
 
         }
 
+        public void GoBack()
+        {
+            if (this.PreviousView is not null)
+            {
+                this.PreviousView.Display(this.PreviousView.PreviousView, this);
+            }
+        }
+
         /// <inheritdoc/>
         public void SwitchTo(View view)
         {

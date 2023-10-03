@@ -25,6 +25,11 @@ namespace BetterConsoleUI.Common.Interfaces
         public abstract void Display(IView? previousView, IView? sendingView = null);
 
         /// <summary>
+        ///     Method used to switch to the previous display.
+        /// </summary>
+        public void GoBack();
+
+        /// <summary>
         ///     Switches the view to the <paramref name="view"/> specified, 
         ///     and removes the controlls from the previous view. Additionally 
         ///     sets the view's <see cref="IView.PreviousView""/> to be this view.

@@ -1,4 +1,5 @@
-﻿using BetterConsoleUI.Components.Input_Methods;
+﻿using BetterConsoleUI.Common.Settings;
+using BetterConsoleUI.Components.Input_Methods;
 using BetterConsoleUI.Components.Views;
 using BetterConsoleUIDemo;
 
@@ -8,7 +9,13 @@ internal class Program
     {
         // Define Views
         RadioButtonView firstView = new RadioButtonView("Please select the view you want to see!");
-        RadioButtonView rbView = new RadioButtonView("A RadioButton View!");
+
+
+        RadioButtonSettings.Selected = "(O)";
+        RadioButtonView rbView = new RadioButtonView("RadioButton View:\nUse the arrow keys to make a selection. To submit, press the enter key.");
+        
+        
+        
         MultipleSelectView msView = new MultipleSelectView("A Multiple Select View.");
         TextSelectView tsView = new TextSelectView("Foo or Bar?");
         NumberInputView nsView = new NumberInputView("Whats your favorite number?");
@@ -31,10 +38,10 @@ internal class Program
         var rbViewSelections =
             new List<RadioButtonSelection>
             {
-                new RadioButtonSelection() {Text = "You made it!", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},
-                new RadioButtonSelection() {Text = "Use arrow keys to navigate up and down!", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},
-                new RadioButtonSelection() {Text = "Use spacebar, the right arrow key, or the spacebar to select and option!", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},
-                new RadioButtonSelection() {Text = "Use the back arrow to return to main menu!", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},
+                new RadioButtonSelection() {Text = "Option 1", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},
+                new RadioButtonSelection() {Text = "Option 2", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},
+                new RadioButtonSelection() {Text = "Option 3", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},
+                new RadioButtonSelection() {Text = "Option 4", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},
             };
 
         var msViewSelections =

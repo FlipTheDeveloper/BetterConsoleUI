@@ -52,11 +52,7 @@ namespace BetterConsoleUI.Components.Input_Methods
                 {
                     if (response == "back")
                     {
-                        if (this.ParentView.PreviousView is not null)
-                        {
-                            this.ParentView.PreviousView.Display(this.ParentView.PreviousView.PreviousView, this.ParentView);
-                        }
-
+                        this.ParentView.GoBack();
                         continue;
                     }
 

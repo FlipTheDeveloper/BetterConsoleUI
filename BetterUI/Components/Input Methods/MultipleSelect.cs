@@ -126,13 +126,7 @@ namespace BetterConsoleUI.Components.Input_Methods
                     // Go to the previous view (if any)
                     case ConsoleKey.LeftArrow:
                         {
-                            if (this.ParentView.PreviousView is not null)
-                            {
-                                // If there is a previous view to display we do, and we set the sender as the PreviousView's PreviousView.
-                                // So we can go back two steps and so on.
-                                this.ParentView.PreviousView.Display(this.ParentView.PreviousView.PreviousView, this.ParentView);
-                            }
-
+                            this.ParentView.GoBack();
                             break;
                         }
 
