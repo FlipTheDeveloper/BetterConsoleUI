@@ -4,7 +4,7 @@ using BetterConsoleUI.Common.Settings;
 namespace BetterConsoleUI.Components.Input_Methods
 {
     /// <summary>
-    ///     A text selection component.
+    ///     A component that invokes a method after the user presses any key on the keyboard (except the back arrow, in which it returns to the previous view.
     /// </summary>
     public class AnyKeyToContinue : IInputMethod
     {
@@ -47,7 +47,7 @@ namespace BetterConsoleUI.Components.Input_Methods
                     // Go to the previous view (if any)
                     case ConsoleKey.LeftArrow:
                         {
-                            if (this.ParentView.PreviousView is not null)
+                            if (this.ParentView.PreviousView is not null && AnyKeyToContinueSettings.BackArrowNavigation)
                             {
                                 // If there is a previous view to display we do, and we set the sender as the PreviousView's PreviousView.
                                 // So we can go back two steps and so on.

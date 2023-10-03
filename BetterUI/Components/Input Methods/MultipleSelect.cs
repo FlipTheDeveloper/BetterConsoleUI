@@ -185,6 +185,4 @@ namespace BetterConsoleUI.Components.Input_Methods
         /// </summary>
         internal bool IsHighlighted;
     }
-
-
 }
