@@ -13,6 +13,7 @@ internal class Program
         TextSelectView tsView = new TextSelectView("Foo or Bar?");
         NumberInputView nsView = new NumberInputView("Whats your favorite number?");
         TextInputView tiView = new TextInputView("Type in your name.");
+        InfoView infoView = new InfoView("You're a cool guy! \n Press any key to continue...");
 
         // Define Selections
         var firstViewSelections =
@@ -23,6 +24,7 @@ internal class Program
                     new RadioButtonSelection() { Text = "TextSelectSelection", MethodToInvoke = () => { firstView.SwitchTo(tsView); } },
                     new RadioButtonSelection() { Text = "TextInputSelection", MethodToInvoke = () => { firstView.SwitchTo(tiView); } },
                     new RadioButtonSelection() { Text = "NumberSelection", MethodToInvoke = () => { firstView.SwitchTo(nsView); } },
+                    new RadioButtonSelection() { Text = "InfoView", MethodToInvoke = () => { firstView.SwitchTo(infoView); } },
                     new RadioButtonSelection() { Text = "Exit", MethodToInvoke = () => { firstView.RevokeControl();  } },
                 };
 
@@ -62,6 +64,7 @@ internal class Program
         tsView.Selections = tiViewSelections;
         nsView.MethodToInvoke = (int x) => { Controllers.GuessNumber(x, nsView); };
         tiView.MethodToInvoke = (string s) => { Controllers.LikesToProgram(s); };
+        infoView.MethodToInvoke = () => { infoView.SwitchTo(firstView); };
 
         firstView.Display();
     }
