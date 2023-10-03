@@ -13,7 +13,7 @@ internal class Program
         TextSelectView tsView = new TextSelectView("Foo or Bar?");
         NumberInputView nsView = new NumberInputView("Whats your favorite number?");
         TextInputView tiView = new TextInputView("Type in your name.");
-        InfoView infoView = new InfoView("You're a cool guy! \n Press any key to continue...");
+        InfoView infoView = new InfoView("You're a cool guy!");
 
         // Define Selections
         var firstViewSelections =

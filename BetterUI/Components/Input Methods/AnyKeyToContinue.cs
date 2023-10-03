@@ -32,6 +32,7 @@ namespace BetterConsoleUI.Components.Input_Methods
         /// <inheritdoc/>
         public void Print()
         {
+            Console.WriteLine(" Press any key to continue...");
         }
 
         /// <inheritdoc/>
