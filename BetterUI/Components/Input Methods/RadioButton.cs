@@ -3,14 +3,29 @@ using BetterConsoleUI.Common.Settings;
 
 namespace BetterConsoleUI.Components.Input_Methods
 {
+    /// <summary>
+    ///     A RadioButton component. A selection method where only one selection can be made at a time.
+    /// </summary>
     public class RadioButton : IInputMethod
     {
+        /// <inheritdoc/>
         public IView ParentView { get; set; }
 
+        /// <summary>
+        ///     A list of possible selections.
+        /// </summary>
         public List<RadioButtonSelection> Selections = new List<RadioButtonSelection>();
 
+        /// <summary>
+        ///     Zero-Based index of the users current selection within the <see cref="Selections"/>.
+        /// </summary>
         public int CurrentSelection = 0;
 
+        /// <summary>
+        ///     Constructor for the <see cref="RadioButton"/> component. 
+        /// </summary>
+        /// <param name="parentView">The view containing this input method.</param>
+        /// <param name="selections">A list of possible selections.</param>
         public RadioButton(IView parentView, List<RadioButtonSelection>? selections)
         {
             ParentView = parentView;
@@ -40,6 +55,7 @@ namespace BetterConsoleUI.Components.Input_Methods
             Console.WriteLine(result);
         }
 
+        /// <inheritdoc/>
         public void Control()
         {
             while (this.HasControl)
@@ -130,10 +146,25 @@ namespace BetterConsoleUI.Components.Input_Methods
 
     }
 
+
+    /// <summary>
+    ///     A possible selection.
+    /// </summary>
     public struct RadioButtonSelection
     {
+        /// <summary>
+        ///     The text to display to the user.
+        /// </summary>
         public string Text;
+
+        /// <summary>
+        ///     The method to invoke if this selection is submitted.
+        /// </summary>
         public Action MethodToInvoke;
+
+        /// <summary>
+        ///     A boolean indicating whether this selection is currently selected or not.
+        /// </summary>
         internal bool IsSelected;
     }
 

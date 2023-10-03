@@ -17,5 +17,10 @@ namespace BetterConsoleUIDemo
             Console.Clear();
             view.Update();
         }
+
+        public static void LikesToProgram(string name)
+        {
+            Console.WriteLine($"{name} likes to program!");
+        }
     }
 }

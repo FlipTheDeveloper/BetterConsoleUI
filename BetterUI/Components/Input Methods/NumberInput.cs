@@ -2,28 +2,55 @@
 
 namespace BetterConsoleUI.Components.Input_Methods
 {
-    public class NumberSelect: IInputMethod
+    /// <summary>
+    ///     A number input component. This component allows the user to
+    ///     select a number between the <see cref="MinNumber"/> and the <see cref="MaxNumber"/>.
+    /// </summary>
+    public class NumberInput: IInputMethod
     {
+        /// <inheritdoc/>
         public IView ParentView { get; set; }
 
+        /// <summary>
+        ///     The number currently selected by the user.
+        /// </summary>
         public int CurrentNumber = 0;
+
+        /// <summary>
+        ///     The smallest number the user may select.
+        /// </summary>
         public int MinNumber = 0;
+
+        /// <summary>
+        ///     The largest number the user may select.
+        /// </summary>
         public int MaxNumber = 0;
 
-        public NumberSelect(IView parentView, Action<int> methodToInvoke, int minNumber, int maxNumber)
+        /// <summary>
+        ///     A constructor for the <see cref="NumberInput"/> component.
+        /// </summary>
+        /// <param name="parentView">The view containing this input method.</param>
+        /// <param name="methodToInvoke">The method to invoke, passing in the user's selected number.</param>
+        /// <param name="minNumber">The smallest number the user may select.</param>
+        /// <param name="maxNumber">The largest number the user may select.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Exception thrown if the <paramref name="minNumber"/> is larger than the <paramref name="maxNumber"/>.</exception>
+        public NumberInput(IView parentView, Action<int> methodToInvoke, int minNumber, int maxNumber)
         {
             ParentView = parentView;
             MethodToInvoke = methodToInvoke;
 
             if (minNumber > maxNumber)
             {
-                throw new ArgumentOutOfRangeException("The minimum value on the NumberSelect input method is larger than the maximum value.");
+                throw new ArgumentOutOfRangeException("The minimum value on the NumberInput input method is larger than the maximum value.");
             }
 
             MinNumber = minNumber;
             MaxNumber = maxNumber;
         }
 
+        /// <summary>
+        ///     The method to pass in the <see cref="CurrentNumber"/> when the user attempts to sumbit the view.
+        /// </summary>
         public Action<int> MethodToInvoke { get; set; }
 
         /// <inheritdoc/>
@@ -47,6 +74,7 @@ namespace BetterConsoleUI.Components.Input_Methods
             Console.WriteLine("▼".PadLeft(4).PadRight(5));
         }
 
+        /// <inheritdoc/>
         public void Control()
         {
             while (this.HasControl)

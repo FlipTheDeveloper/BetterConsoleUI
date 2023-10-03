@@ -4,7 +4,7 @@ using BetterConsoleUI.Components.Input_Methods;
 namespace BetterConsoleUI.Components.Views
 {
     /// <summary>
-    ///     A View using the <see cref="NumberSelect"/> component.
+    ///     A View using the <see cref="NumberInput"/> component.
     /// </summary>
     public class RadioButtonView : View
     {

@@ -3,15 +3,30 @@ using BetterConsoleUI.Common.Settings;
 
 namespace BetterConsoleUI.Components.Input_Methods
 {
+    /// <summary>
+    ///     A multiple select component. Allowing the user to make several
+    ///     selections at once. And invoking all of the <see cref="MultipleSelectSelection.MethodToInvoke"/>.
+    /// </summary>
     public class MultipleSelect : IInputMethod
     {
-
+        /// <inheritdoc/>
         public IView ParentView { get; set; }
 
+        /// <summary>
+        ///     A list of possible selections.
+        /// </summary>
         public List<MultipleSelectSelection> Selections = new List<MultipleSelectSelection>();
 
+        /// <summary>
+        ///     The current selection within the <see cref="Selections"/>
+        /// </summary>
         public int CurrentSelection = 0;
 
+        /// <summary>
+        ///     Constructor for the <see cref="MultipleSelect"/> component. Allowing users to make several selections at once using the arrowkeys and the spacebar.
+        /// </summary>
+        /// <param name="parentView">The view containing this component.</param>
+        /// <param name="selections">A list of possible selections.</param>
         public MultipleSelect(IView parentView, List<MultipleSelectSelection>? selections)
         {
             ParentView = parentView;
@@ -46,6 +61,7 @@ namespace BetterConsoleUI.Components.Input_Methods
             }
         }
 
+        /// <inheritdoc/>
         public void Control()
         {
             while (this.HasControl)
@@ -144,11 +160,29 @@ namespace BetterConsoleUI.Components.Input_Methods
 
     }
 
+    /// <summary>
+    ///     A possible selection.
+    /// </summary>
     public struct MultipleSelectSelection
     {
+        /// <summary>
+        ///     The text to display to the user.
+        /// </summary>
         public string Text;
+
+        /// <summary>
+        ///     The method to invoke if this selection is one of the selections submitted.
+        /// </summary>
         public Action MethodToInvoke;
+
+        /// <summary>
+        ///     A boolean indicating whether the selection is currently selected.
+        /// </summary>
         internal bool IsSelected;
+
+        /// <summary>
+        ///     A boolean indicating whether the selction is currently highlighted by the user.
+        /// </summary>
         internal bool IsHighlighted;
     }
 

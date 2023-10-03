@@ -3,12 +3,19 @@ using BetterConsoleUI.Common.Settings;
 
 namespace BetterConsoleUI.Components.Input_Methods
 {
+    /// <summary>
+    ///     A text selection component.
+    /// </summary>
     public class TextSelect : IInputMethod
     {
+        /// <inheritdoc/>
         public IView ParentView { get; set; }
 
         private List<TextSelectSelection> selections = new List<TextSelectSelection>();
 
+        /// <summary>
+        ///     A list of possible selections.
+        /// </summary>
         public List<TextSelectSelection> Selections
         {
             get 
@@ -28,6 +35,11 @@ namespace BetterConsoleUI.Components.Input_Methods
             }
         }
 
+        /// <summary>
+        ///     Constructor for the <see cref="TextSelect"/> class.
+        /// </summary>
+        /// <param name="parentView">The view containing this input method.</param>
+        /// <param name="selections">Possible selections and their <see cref="TextSelectSelection.MethodToInvoke"/>.</param>
         public TextSelect(IView parentView, List<TextSelectSelection>? selections)
         {
             ParentView = parentView;
@@ -50,11 +62,10 @@ namespace BetterConsoleUI.Components.Input_Methods
                 }
             }
         }
-
+        
+        /// <inheritdoc/>
         public void Control()
         {
-
-
             while (this.HasControl)
             {
                 var response = Console.ReadLine();
@@ -63,6 +74,7 @@ namespace BetterConsoleUI.Components.Input_Methods
 
                 if (response == null || response == string.Empty)
                 {
+                    this.ParentView.Update();
                     continue;
                 }
 
@@ -72,6 +84,10 @@ namespace BetterConsoleUI.Components.Input_Methods
                     selections = selections.Select(s => new TextSelectSelection() { Text = s.Text.ToLower(), MethodToInvoke = s.MethodToInvoke }).ToList();
                 }
 
+                // Find exact matches first.
+                matches.AddRange(selections.Where(s => s.Text == response));
+
+                // Then find fuzzy matches.
                 if (TextSelectSettings.AllowFuzzySelectionMatching)
                 {
                     foreach (var s in selections)
@@ -105,6 +121,9 @@ namespace BetterConsoleUI.Components.Input_Methods
 
         }
 
+        /// <summary>
+        ///     A method to display possible options within the console.
+        /// </summary>
         public void Help()
         {
             this.ParentView.Update();
@@ -120,6 +139,9 @@ namespace BetterConsoleUI.Components.Input_Methods
             }
         }
 
+        /// <summary>
+        ///     A method to return to the previous view.
+        /// </summary>
         public void Back()
         {
             if (this.ParentView.PreviousView != null)
@@ -127,14 +149,21 @@ namespace BetterConsoleUI.Components.Input_Methods
                 this.ParentView.PreviousView.Display(this.ParentView.PreviousView.PreviousView, this.ParentView);
             }
         }
-
     }
 
-
-
+    /// <summary>
+    ///     A possible selection.
+    /// </summary>
     public struct TextSelectSelection
     {
+        /// <summary>
+        ///     The text to match against the keyword.
+        /// </summary>
         public string Text;
+
+        /// <summary>
+        ///     The method to invoke if the keyword matches.
+        /// </summary>
         public Action MethodToInvoke;
     }
 
