@@ -14,11 +14,11 @@ internal class Program
         RadioButtonSettings.Selected = "(O)";
         RadioButtonView rbView = new RadioButtonView("RadioButton View:\nUse the arrow keys to make a selection. To submit, press the enter key.");
         
-        
-        
         MultipleSelectView msView = new MultipleSelectView("A Multiple Select View.");
+
+
         TextSelectView tsView = new TextSelectView("Foo or Bar?");
-        NumberInputView nsView = new NumberInputView("Whats your favorite number?");
+        NumberInputView nsView = new NumberInputView("Select a number between 1 and 5.", minNumber: 1, maxNumber: 5);
         TextInputView tiView = new TextInputView("Type in your name.");
         InfoView infoView = new InfoView("You're a cool guy!");
 
@@ -54,7 +54,7 @@ internal class Program
                 new MultipleSelectSelection() {Text = "Fifth Selection", MethodToInvoke = () => { Console.WriteLine("5"); } },
             };
 
-        var tiViewSelections =
+        var tsViewSelections =
             new List<TextSelectSelection>
             {
                 new TextSelectSelection() {Text = "Foo", MethodToInvoke = () => { Console.Clear(); Console.WriteLine("Foo is good");}},
@@ -68,7 +68,7 @@ internal class Program
         firstView.Selections = firstViewSelections;
         rbView.Selections = rbViewSelections;
         msView.Selections = msViewSelections;
-        tsView.Selections = tiViewSelections;
+        tsView.Selections = tsViewSelections;
         nsView.MethodToInvoke = (int x) => { Controllers.GuessNumber(x, nsView); };
         tiView.MethodToInvoke = (string s) => { Controllers.LikesToProgram(s); };
         infoView.MethodToInvoke = () => { infoView.SwitchTo(firstView); };

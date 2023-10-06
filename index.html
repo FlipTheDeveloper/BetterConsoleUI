@@ -26,8 +26,8 @@
         gtag('config', 'UA-215052267-1');
     </script>
     <style>
-        main {
-            height: 100vh;
+        code {
+            color: whitesmoke;
         }
     </style>
 </head>
@@ -72,11 +72,289 @@
     </nav>
     <main class="container">
         <h1 class="text-center">Better Console UI</h1>
+        <p>Class library that offers intuitive navigation through your console application.</p>
+        <p>I developed a class library that allows easy navigation through your console application dialog. Utilizing keyboard input such as arrow keys, the space bar, the enter key and a custom made fuzzy search engine.</p>
+        <h2>Parts of a View</h2>
+        The class library consists mainly of views and their respective components. A view is like a page on a website. Only one view can be displayed at a time. A view mainly consists of:
+        <ul>
+            <li>A Header</li>
+            <li>A Input</li>
+            <li>A PreviousView</li>
+            <li>A Display() Method</li>
+            <li>A SwitchTo() Method</li>
+            <li>An Update() Method</li>
+            <li>RevokeControl() Method</li>
+        </ul>
+        <h3>Header</h3>
+        <p>A header is a prompt to the user on what to do next, or a clarifying statement about the options displayed in the Input.</p>
+        
+        <h3>Input</h3>
+        <p>An input is the kind of input the user can use to provide their desired choice to the view.</p>
+        
+        <h4>Example</h4>
+        <img src="images/Input_Example.png">
         <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis expedita fugit quidem aliquam debitis eos, architecto totam delectus suscipit doloremque nisi ratione, nam maiores hic reiciendis accusamus itaque voluptates ipsum.
+            Here the header of the view is 
+            <code>
+                RadioButton View:<br>
+                Use the arrow keys to make a selection. To submit, press the enter key.<br>
+            </code>
+            And the input of the view is the RadioButton input method. With four options.
+            <code>
+                (X) Option 1<br>
+                ( ) Option 2<br>
+                ( ) Option 3<br>
+                ( ) Option 4<br>
+            </code>
         </p>
+
+        <h4>Customizing Inputs</h4>
+        <p>When developing this class library I thought it best to allow the user to choose the way the views display their inputs.</p>
+        <p>Most inputs have a static class for their respective settings. The naming convention is &lt;input method&gt;Settings. It lies within the <code>BetterConsoleUI.Common.Settings</code> namespace.</p>
+        <p>
+            Here is an example.
+            <bold>Code:</bold>
+            <code>
+                    RadioButtonSettings.Selected = "(O)";<br>
+                    RadioButtonView rbView = new RadioButtonView("RadioButton View:\nUse the arrow keys to make a selection. To submit, press the enter key.");<br>
+            </code>
+        </p>
+
+        <bold>Result:</bold>
+        <p>
+            <img src="images/CustomizingInputs.png">
+        </p>
+        <h3>Previous View</h3>
+        <p>The PreviousView field on a View is pretty self explanatory. The PreviousView is the last view that the user saw before this one. (Excluding any backward navigation)</p>
+        
+        <h3>Display(IView? previousView = null, IView? sender = null) Method</h3>
+        <p>The display method is used to force the view to be displayed within the console. Whenever a view is being displayed, its input needs to have control of the Console window so that it can capture the user’s inputs. But when we switch the views we need to be sure that the control of the Console Window has been revoked from the previous view, and whatever other view is sending the user to that view.</p>
+
+        <p>secondView.Display(firstView) will set the PreviousView field on secondView to be firstView. And ensure that the control of the console has been removed from firstView and given to the secondView.</p>
+
+        <p>You can navigate backwards from any view. Let’s say that we were just looking at thirdView, but now we want to go back to the second view. But I want to set the secondView’s PreviousView to be the firstView. Here is an example of this using the Display() method.</p>
+
+        <p>
+            <code>
+                // Displays the secondView, revoking control from firstView and thirdView and sets secondView.PreviousView to be firstView.<br>
+                secondView.Display(firstView, thirdView);<br>
+            </code>
+        </p>
+        <h3>GoBack() Method</h3>
+        <p><code>GoBack()</code> is an easy way to safely return to the previous page. </p>
+        <p><code>thirdView.GoBack()</code> will display the secondView. <code>secondView.GoBack()</code> will display the </code>firstView</code>. etc.</p>
+        
+        <h3>SwitchTo(View view) Method</h3>
+        <p><code>firstView.SwitchTo(secondView)</code> displays the <code>secondView</code>, setting <code>firstView</code> as <code>secondView</code>'s <code>PreviousView</code>.</p>
+
+        <h3>Update() Method</h3>
+        <p>The Update() method updates the view currently being displayed. For instance, if you are looking at <code>firstView</code> and in your code you changed the <code>firstView</code>'s Header to be something new. And you want to display that new header to the user. You would call the <code>firstView.Update()</code> method. Every time the Input is manipulated the Update() method is called.        </p>
+
+        <h3>RevokeControl() Method</h3>
+        <p><code>RevokeControl()</code> removes the control from the view you called it on. Let's you would like to provide the user with an option to end the application. A good way to do this is calling <code>RevokeControl()</code> on the view you are currently on.</p>
+
+        <h2>Different Views</h2>
+        Currently, there are six different custom views that you can select from.
+        <ul>
+            <li>InfoView</li>
+            <li>MultipleSelectView</li>
+            <li>NumberInputView</li>
+            <li>RadioButtonView</li>
+            <li>TextInputView</li>
+            <li>TextSelectView</li>
+        </ul>
+
+        <h3>InfoView</h3>
+        <p>The info view contains a AnyKeyToContinue input method. The header gets printed to the console. And then the AnyKeyToContinue input method awaits some key press. If the key pressed is the back arrow. It will return to the previous view. Otherwise it will invoke the method provided.</p>
+        <p>
+            <code>
+                InfoView infoView = new InfoView("You're a cool guy!");<br>
+                infoView.MethodToInvoke = () => { infoView.SwitchTo(firstView); };<br>
+                infoView.Display();<br>
+            </code>
+        </p>
+
+        <p>
+            <img src="images/InfoView.png">
+        </p>
+        <h3>MultipleSelectView</h3>
+        The MultipleSelectView contains a MultipleSelect input method. You provide the MultipleSelectView with a List&lt;MultipleSelectSelection&gt;. Each MultipleSelectSelections contains:
+        <ul>
+                <li>Text to display</li>
+                <li>MethodToInvoke when the MultipleSelect input method is submitted and the MultipleSelectSelection is Selected.</li>
+                <li>IsSelected boolean indicating whether the selection is currently selected.</li>
+                <li>IsHighlighted boolean indicating whether the selection is currently highlighted by the user</li>
+        </ul>
+
+        The header gets printed to console and then the MultipleSelect input listens for keypresses:
+        <ul>
+            <li>UpArrow
+                <ul>
+                    <li>Highlights the previous MultipleSelectSelection.</li>
+                </ul>
+            </li>
+            <li>DownArrow
+                <ul>
+                    <li>Highlights the next MultipleSelectSelection.</li>
+                </ul>
+            </li>
+            <li>LeftArrow
+                <ul>
+                    <li>Displays the previous view.</li>
+                </ul>
+            </li>
+            <li>RightArrow or SpaceBar
+                <ul>
+                    <li>Select the highlighted MultipleSelectSelection.</li>
+                </ul>
+            </li>
+            <li>Enter
+                <ul>
+                    <li>Submits all of the selected MultipleSelectSelections invoking their MethodToInvoke.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <p>
+            <code>
+                MultipleSelectView msView = new MultipleSelectView("A Multiple Select View.");<br>
+                var msViewSelections =<br>
+                            new List<MultipleSelectSelection><br>
+                            {<br>
+                                new MultipleSelectSelection() {Text = "First Selection", MethodToInvoke = () => { Console.WriteLine("1"); } },<br>
+                                new MultipleSelectSelection() {Text = "Second Selection", MethodToInvoke = () => { Console.WriteLine("2"); } },<br>
+                                new MultipleSelectSelection() {Text = "Third Selection", MethodToInvoke = () => { Console.WriteLine("3"); } },<br>
+                                new MultipleSelectSelection() {Text = "Fourth Selection", MethodToInvoke = () => { Console.WriteLine("4"); } },<br>
+                                new MultipleSelectSelection() {Text = "Fifth Selection", MethodToInvoke = () => { Console.WriteLine("5"); } },<br>
+                            };<br>
+                msView.Selections = msViewSelections;<br>
+                msView.Display();<br>
+            </code>
+        </p>
+
+        <p>
+            <img src="images/MultipleSelectView1.png">
+            <img src="images/MultipleSelectView2.png">
+        </p>
+
+        <h3>NumberInputView</h3>
+        <p>
+            The NumberInputView contains a NumberInput input method. It enables the user to select a number between the minimumNumber provided and the maximumNumber provided.
+        </p>
+
+        <p>
+            <code>
+                NumberInputView nsView = new NumberInputView("Select a number between 1 and 5.", minNumber: 1, maxNumber: 5);<br>
+                nsView.MethodToInvoke = (int x) => <br>
+                { <br>
+                // SomeMethod(x);<br>
+                };<br>
+                nsView.Display();<br>
+            </code>
+        </p>
+        <p>
+            To control the NumberInput input method, you use the up and down arrow keys to select the number, enter to submit the selected number (and pass it to its MethodToInvoke Action<int>). And the left arrow returns to the previous view.
+        </p>
+
+        <h3>RadioButtonView</h3>
+        <img src="images/RadioButtonView.png">
+        <p>The RadioButtonView uses the RadioButton input method. It allows the user to select one option from options provided.</p>
+        The selections are represented by a <code>List<RadioButtonSelection></code> a RadioButtonSelection consists of:
+        <ul>
+            <li>
+                Text
+                <ul>
+                    <li>
+                        The text to display to the user.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                MethodToInvoke
+                <ul>
+                    <li>
+                        The method to invoke if this selection is submitted.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                IsSelected
+                <ul>
+                    <li>
+                        A boolean indicating whether this selection is currently selected or not.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <p>
+            Here is an example:<br>
+            <code>
+                RadioButtonView rbView = new RadioButtonView("RadioButton View:\nUse the arrow keys to make a selection. To submit, press the enter key.");
+                
+                        var rbViewSelections =<br>
+                            new List&lt;RadioButtonSelection&gt;<br>
+                            {<br>
+                                new RadioButtonSelection() {Text = "Option 1", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},<br>
+                                new RadioButtonSelection() {Text = "Option 2", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},<br>
+                                new RadioButtonSelection() {Text = "Option 3", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},<br>
+                                new RadioButtonSelection() {Text = "Option 4", MethodToInvoke= () => { Console.WriteLine("Press the left_arrow to navigate back a page!"); }},<br>
+                            };<br>
+                            <br>
+                        rbView.Selections = rbViewSelections;<br>
+            </code>
+        </p>
+
+        <h3>TextInputView</h3>
+        <p>The text input view is a view that takes in user input and passes that input into an Action&lt;string&gt;. It uses the TextInput input method.</p>
+        <img src="images/TextInputView1.png">
+
+        <p>
+            <code>
+                TextInputView tiView = new TextInputView("Type in your name.");<br>
+                tiView.MethodToInvoke = (string s) => { LikesToProgram(s); };<br>
+                tiView.Display();<br>
+                <br>
+                public static void LikesToProgram(string name)<br>
+                    {<br>
+                        Console.WriteLine($"{name} likes to program!");<br>
+                    }<br>
+            </code>
+        </p>
+        <p>
+            <img src="images/TextInputView2.png">
+        </p>
+
+        <h3>TextSelectView</h3>
+        The TextSelectView is a view that enables the user to select one option among many. The selections are represented by a List&lt;TextSelectSelection&gt;. A TextSelectSelection object consists of.
+        <ul>
+            <li>
+                Text
+                <ul>
+                    <li>
+                        The text to match against the user's input.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                MethodToInvoke
+                <ul>
+                    <li>
+                        The method to invoke if the user's input matches.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <p>
+            The TextSelectView uses the TextSelect input method.
+        </p>
+        <p>
+            <img src="images/TextSelectView.png">
+        </p>
+        
     </main><!-- Option 1: Bootstrap Bundle with Popper -->
-    <footer class="bg-dark text-light container-fluid py-3" >
+        <footer class="bg-dark text-light container-fluid py-3" >
         <div class="row align-items-center">
             <div class="col-lg-7 align-self-center">
                 <!-- Email -->

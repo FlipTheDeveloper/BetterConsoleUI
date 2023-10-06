@@ -175,7 +175,7 @@ namespace BetterConsoleUI.Components.Input_Methods
         internal bool IsSelected;
 
         /// <summary>
-        ///     A boolean indicating whether the selction is currently highlighted by the user.
+        ///     A boolean indicating whether the selection is currently highlighted by the user.
         /// </summary>
         internal bool IsHighlighted;
     }
